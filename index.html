@@ -19,6 +19,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+<!-- Set theme before paint to avoid a flash. Default: dark botanical. -->
+<script>
+  (function () {
+    var q = new URLSearchParams(location.search).get('theme');
+    if (q === 'refined' || q === 'botanical') {
+      try { localStorage.setItem('chalk-theme', q); } catch (e) {}
+    }
+    var t = localStorage.getItem('chalk-theme') || 'botanical';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 <link rel="stylesheet" href="styles.css" />
 
 <!-- Structured data for AI + search discoverability -->
@@ -66,6 +77,12 @@
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
   <symbol id="i-scissors" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.12 15.88"/><path d="M14.47 14.48L20 20"/><path d="M8.12 8.12L12 12"/></symbol>
   <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2 12h2.5M19.5 12H22M4.2 19.8L6 18M18 6l1.8-1.8"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 6-13 14-13 0 8-5 14-13 14-1 0-1-1-1-1z"/><path d="M5 19c3-4 6-6 9-7"/></symbol>
+  <!-- Botanical ornaments (dark theme only) -->
+  <symbol id="bot-frond" viewBox="0 0 80 240"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M40 238 C40 190 40 120 42 12"/><path d="M42 42 C28 36 18 24 12 10"/><path d="M42 42 C56 36 66 24 72 10"/><path d="M41 82 C27 76 17 64 11 50"/><path d="M41 82 C55 76 65 64 71 50"/><path d="M41 120 C27 114 17 102 11 88"/><path d="M41 120 C55 114 65 102 71 88"/><path d="M41 156 C29 151 21 141 16 129"/><path d="M41 156 C53 151 61 141 66 129"/><path d="M40 192 C31 188 25 180 21 170"/><path d="M40 192 C49 188 55 180 59 170"/></g></symbol>
+  <symbol id="bot-flourish" viewBox="0 0 220 30"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M110 15 C88 15 74 6 50 12"/><path d="M110 15 C132 15 146 6 170 12"/><path d="M66 11 C60 5 54 6 51 11"/><path d="M154 11 C160 5 166 6 169 11"/><path d="M84 13 C80 8 75 8 72 12"/><path d="M136 13 C140 8 145 8 148 12"/></g><circle cx="110" cy="15" r="3" fill="currentColor"/></symbol>
 </svg>
 
 <!-- ================= HEADER ================= -->
@@ -78,16 +95,28 @@
     <a href="#stylists">Stylists</a>
     <a href="#booth">Rent a Chair</a>
     <a href="#visit">Visit</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch between light and dark botanical themes" title="Toggle theme">
+      <svg class="ico ico--moon"><use href="#i-moon"/></svg>
+      <svg class="ico ico--sun"><use href="#i-sun"/></svg>
+    </button>
     <a class="btn btn--cognac" href="#visit">Book</a>
   </nav>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-    <span></span><span></span><span></span>
-  </button>
+  <div class="header-tools">
+    <button class="theme-toggle theme-toggle--mobile" id="themeToggleMobile" aria-label="Switch theme" title="Toggle theme">
+      <svg class="ico ico--moon"><use href="#i-moon"/></svg>
+      <svg class="ico ico--sun"><use href="#i-sun"/></svg>
+    </button>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="top">
   <div class="hero__bg" aria-hidden="true"></div>
+  <svg class="bot bot--frond-l" aria-hidden="true"><use href="#bot-frond"/></svg>
+  <svg class="bot bot--frond-r" aria-hidden="true"><use href="#bot-frond"/></svg>
   <div class="hero__inner wrap">
     <span class="eyebrow">Portland, Maine · By Appointment</span>
     <h1>Craft with<br /><em>character.</em></h1>
@@ -151,6 +180,7 @@
     <div class="space__head reveal">
       <span class="eyebrow">The Space</span>
       <h2>Come for the hair, stay for the details.</h2>
+      <svg class="bot flourish" aria-hidden="true"><use href="#bot-flourish"/></svg>
       <p>Every corner of Chalk was designed to be looked at, from statement wallpapers to the brass menagerie on the walls.</p>
     </div>
     <div class="gallery">
@@ -196,6 +226,7 @@
     <div class="stylists__head reveal">
       <span class="eyebrow">The Artists</span>
       <h2>Independent talent, one beautiful room.</h2>
+      <svg class="bot flourish" aria-hidden="true"><use href="#bot-flourish"/></svg>
       <p>Each stylist at Chalk is an independent business owner. Choose the artist whose work speaks to you and book with them directly.</p>
     </div>
 
@@ -322,6 +353,14 @@
     </div>
   </div>
 </footer>
+
+<!-- Film-grain / paper texture overlay (both themes) -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Sticky booking button — the one thing that stays rigid no matter the theme -->
+<a class="book-fab" href="#visit" aria-label="Book an appointment">
+  <svg class="ico"><use href="#i-calendar"/></svg><span>Book</span>
+</a>
 
 <!-- ================= LIGHTBOX ================= -->
 <div class="lightbox" id="lightbox">

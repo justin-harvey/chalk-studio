@@ -17,6 +17,22 @@ Pulled from the interior photos: chalk-white walls with brass line-work, cognac
 leather, ochre velvet, walnut cabinetry, ink-black ceilings, brass fauna.
 Fonts: Fraunces (display serif) + Jost (sans).
 
+## Themes (light/dark toggle)
+The site ships with two full themes, switched by the toggle in the header
+(sun/moon icon) and remembered in `localStorage`:
+- **`refined`** — the original warm & refined light look (cream/cognac/brass).
+- **`botanical`** — dark botanical maximalist: deep plum + forest backgrounds,
+  brass botanical fern/flourish ornaments, jewel contrast, heavier grain.
+
+**Default is `botanical`.** To change the default, edit the two fallbacks
+(`|| 'botanical'`) in the inline `<script>` in `index.html` head and in
+`script.js`. You can also force a theme via URL for sharing/screenshots:
+`?theme=refined` or `?theme=botanical`.
+
+Both themes share a film-grain/paper texture overlay (`.grain`) and a sticky
+"Book" button (`.book-fab`) that appears past the hero — the booking path stays
+rigid no matter how wild the visuals get.
+
 ## Icons
 Local inline SVG sprite in `index.html` (`#i-*` symbols), no icon CDN. Path
 data for calendar/arrow/close is from the StyleSeed icon library

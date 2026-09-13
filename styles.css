@@ -674,3 +674,166 @@ a { color: inherit; }
   * { animation: none !important; transition: none !important; scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; }
 }
+
+/* ===========================================================
+   TEXTURE  —  film grain / paper (both themes)
+   =========================================================== */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 140px 140px;
+  opacity: 0.32;
+  mix-blend-mode: multiply;
+}
+
+/* ===========================================================
+   THEME TOGGLE  +  STICKY BOOK BUTTON
+   =========================================================== */
+.theme-toggle {
+  width: 38px; height: 38px;
+  display: inline-grid;
+  place-items: center;
+  background: none;
+  border: 1px solid rgba(245,239,230,0.45);
+  color: var(--chalk);
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
+}
+.theme-toggle:hover { background: var(--cognac); color: var(--chalk); border-color: var(--cognac); transform: rotate(-12deg); }
+.theme-toggle .ico { width: 18px; height: 18px; }
+.site-header.scrolled .theme-toggle { color: var(--ink); border-color: rgba(27,24,21,0.3); }
+/* moon shows in light (go dark); sun shows in dark (go light) */
+.ico--sun { display: none; }
+.ico--moon { display: block; }
+[data-theme="botanical"] .ico--moon { display: none; }
+[data-theme="botanical"] .ico--sun { display: block; }
+
+.header-tools { display: none; align-items: center; gap: 0.6rem; }
+
+.book-fab {
+  position: fixed;
+  right: 1.1rem; bottom: 1.1rem;
+  z-index: 60;
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.35rem;
+  background: var(--cognac);
+  color: var(--chalk);
+  border-radius: 999px;
+  text-decoration: none;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  box-shadow: 0 12px 30px -8px rgba(0,0,0,0.55);
+  transition: transform .25s ease, background .25s ease;
+}
+.book-fab:hover { transform: translateY(-3px); }
+.book-fab .ico { width: 17px; height: 17px; }
+body.past-hero .book-fab { display: inline-flex; }
+
+/* Botanical ornaments hidden unless dark theme is active */
+.bot { display: none; }
+
+/* ===========================================================
+   DARK BOTANICAL MAXIMALIST THEME
+   Deep plum + forest + brass. Activated by data-theme="botanical".
+   =========================================================== */
+[data-theme="botanical"] {
+  --line: rgba(201,162,75,0.24);
+  --muted: #9b8f7e;
+  --shadow: 0 26px 64px -28px rgba(0,0,0,0.72);
+  --bg: #1b1020;
+  --bg-alt: #12201a;
+  --panel: #271634;
+  --panel-2: #16271d;
+  --text: #efe6d6;
+  --text-soft: #cabca9;
+}
+
+/* Surfaces + base text */
+[data-theme="botanical"] body { background: var(--bg); color: var(--text); }
+[data-theme="botanical"] .story__body p,
+[data-theme="botanical"] .space__head p,
+[data-theme="botanical"] .stylists__head p,
+[data-theme="botanical"] .visit__body p,
+[data-theme="botanical"] .roster-note,
+[data-theme="botanical"] .roster-cta { color: var(--text-soft); }
+
+[data-theme="botanical"] .services { background: var(--bg-alt); }
+[data-theme="botanical"] .svc { background: #0f1a14; }
+[data-theme="botanical"] .svc:hover { background: #16251c; }
+[data-theme="botanical"] .stylists { background: var(--panel-2); }
+
+/* Cards */
+[data-theme="botanical"] .owner,
+[data-theme="botanical"] .stylist-card { background: var(--panel); border-color: var(--edge, var(--line)); }
+[data-theme="botanical"] .owner__body blockquote { color: var(--text); }
+[data-theme="botanical"] .owner__body p,
+[data-theme="botanical"] .stylist-card p { color: var(--text-soft); }
+[data-theme="botanical"] .stylist-card__mono {
+  color: var(--brass-lt);
+  background:
+    radial-gradient(circle at 30% 25%, rgba(216,189,131,0.22), transparent 60%),
+    linear-gradient(140deg, #2a1838, #16271d);
+  border-bottom-color: var(--line);
+}
+[data-theme="botanical"] .stat b { color: var(--brass-lt); }
+[data-theme="botanical"] .story__figure .tag { background: var(--brass); color: #1b1020; }
+
+/* Links + buttons */
+[data-theme="botanical"] .slink { color: var(--text); border-color: var(--line); }
+[data-theme="botanical"] .slink:hover { background: var(--brass); color: #1b1020; border-color: var(--brass); }
+[data-theme="botanical"] .btn { --bg: var(--brass); --fg: #1b1020; border-color: var(--brass); }
+[data-theme="botanical"] .btn--cognac { --bg: var(--cognac); border-color: var(--cognac); color: #1b1020; }
+[data-theme="botanical"] .btn--ghost { color: var(--text); border-color: var(--line); }
+[data-theme="botanical"] .btn--ghost:hover { background: var(--brass); color: #1b1020; border-color: var(--brass); }
+[data-theme="botanical"] .book-fab { background: var(--brass); color: #1b1020; }
+
+/* Contact list */
+[data-theme="botanical"] .contact-list .v { color: var(--text); }
+
+/* Header + footer */
+[data-theme="botanical"] .site-header.scrolled { background: rgba(27,16,32,0.9); box-shadow: 0 1px 0 var(--line); }
+[data-theme="botanical"] .site-header.scrolled .brand { color: var(--text); }
+[data-theme="botanical"] .site-header.scrolled .nav a { color: var(--text-soft); }
+[data-theme="botanical"] .site-header.scrolled .nav-toggle span { background: var(--text); }
+[data-theme="botanical"] .site-footer { background: #140b18; }
+
+/* Hero: plum wash + botanical fronds */
+[data-theme="botanical"] .hero::after {
+  background: linear-gradient(180deg, rgba(20,10,24,0.62) 0%, rgba(20,10,24,0.22) 35%, rgba(14,8,18,0.86) 100%);
+}
+[data-theme="botanical"] .grain { mix-blend-mode: overlay; opacity: 0.55; }
+
+/* Ornaments */
+[data-theme="botanical"] .bot { display: block; color: var(--brass); }
+.bot--frond-l, .bot--frond-r {
+  position: absolute;
+  bottom: 0;
+  width: 74px; height: 220px;
+  z-index: 1;
+  opacity: 0.45;
+}
+.bot--frond-l { left: 1.5%; }
+.bot--frond-r { right: 1.5%; transform: scaleX(-1); }
+.flourish { width: 200px; height: 26px; margin: 1.1rem auto 0.2rem; opacity: 0.9; }
+
+@media (max-width: 900px) {
+  .bot--frond-l, .bot--frond-r { width: 52px; height: 150px; opacity: 0.35; }
+}
+
+@media (max-width: 640px) {
+  .header-tools { display: flex; }
+  .nav .theme-toggle { display: none; }
+  .book-fab { display: inline-flex; }
+  .bot--frond-l, .bot--frond-r { display: none; }
+  [data-theme="botanical"] .bot.flourish { display: block; }
+}

@@ -87,9 +87,26 @@ function renderStylists() {
 }
 renderStylists();
 
-// Sticky header state
+// Theme toggle — refined (light) <-> dark botanical maximalist
+const THEME_KEY = 'chalk-theme';
+const root = document.documentElement;
+const currentTheme = () => root.getAttribute('data-theme') || 'botanical';
+function setTheme(t) {
+  root.setAttribute('data-theme', t);
+  try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+}
+['themeToggle', 'themeToggleMobile'].forEach(id => {
+  const b = document.getElementById(id);
+  if (b) b.addEventListener('click', () =>
+    setTheme(currentTheme() === 'botanical' ? 'refined' : 'botanical'));
+});
+
+// Sticky header state + reveal the floating Book button past the hero
 const header = document.getElementById('header');
-const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 40);
+const onScroll = () => {
+  header.classList.toggle('scrolled', window.scrollY > 40);
+  document.body.classList.toggle('past-hero', window.scrollY > window.innerHeight * 0.7);
+};
 onScroll();
 window.addEventListener('scroll', onScroll, { passive: true });
 
