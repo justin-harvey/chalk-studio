@@ -26,7 +26,7 @@
     if (q === 'refined' || q === 'botanical') {
       try { localStorage.setItem('chalk-theme', q); } catch (e) {}
     }
-    var t = localStorage.getItem('chalk-theme') || 'botanical';
+    var t = localStorage.getItem('chalk-theme') || 'refined';
     document.documentElement.setAttribute('data-theme', t);
   })();
 </script>
@@ -258,6 +258,21 @@
   </div>
 </section>
 
+<!-- ================= STYLIST MATCHER ================= -->
+<section class="matcher" id="matcher">
+  <div class="wrap">
+    <div class="matcher__head reveal">
+      <span class="eyebrow">Find your stylist</span>
+      <h2>Not sure who to book?</h2>
+      <svg class="bot flourish" aria-hidden="true"><use href="#bot-flourish"/></svg>
+      <p>Answer three quick questions and we'll point you to two Chalk artists who fit.</p>
+    </div>
+    <div class="matcher__card reveal">
+      <div id="quizStage"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= BOOTH RENTAL ================= -->
 <section class="booth" id="booth">
   <div class="booth__bg" aria-hidden="true"></div>
@@ -282,7 +297,7 @@
       <span class="eyebrow">Visit &amp; Book</span>
       <h2>Come find us.</h2>
       <svg class="bot flourish flourish--left" aria-hidden="true"><use href="#bot-flourish"/></svg>
-      <p style="color:var(--ink-soft)">Chalk Studio is open by appointment. To book, reach the studio directly or book with your stylist. New here? Call and we'll match you with the right artist.</p>
+      <p class="visit__lead">Chalk Studio is open by appointment. To book, reach the studio directly or book with your stylist. New here? Call and we'll match you with the right artist.</p>
       <ul class="contact-list">
         <li>
           <svg class="ico ico--lead"><use href="#i-pin"/></svg>

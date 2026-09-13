@@ -17,7 +17,8 @@
   --walnut:     #6a4a2e;   /* cabinetry */
   --brass:      #bd9a54;   /* hardware / linework */
   --brass-lt:   #d8bd83;
-  --muted:      #7c7267;   /* warm gray floor */
+  --muted:      #635a50;   /* warm gray — AA on cream */
+  --accent-text:#8a4c26;   /* cognac tuned for AA small-text on cream */
   --line:       rgba(27, 24, 21, 0.14);
 
   /* Type */
@@ -82,7 +83,7 @@ a { color: inherit; }
   font-size: 0.72rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--cognac);
+  color: var(--accent-text);
   margin: 0 0 1.1rem;
   display: inline-flex;
   align-items: center;
@@ -115,7 +116,7 @@ a { color: inherit; }
   transition: transform .25s ease, background .25s ease, color .25s ease;
 }
 .btn:hover { transform: translateY(-2px); }
-.btn--cognac { --bg: var(--cognac); border-color: var(--cognac); }
+.btn--cognac { --bg: var(--cognac); --fg: #ffffff; border-color: var(--cognac); }
 .btn--cognac:hover { --bg: var(--cognac-dk); border-color: var(--cognac-dk); }
 .btn--ghost {
   background: transparent;
@@ -168,8 +169,8 @@ a { color: inherit; }
 }
 .site-header.scrolled .nav a { color: var(--ink-soft); }
 .nav a:hover { opacity: 0.65; }
-.nav .btn { color: var(--chalk); }
-.site-header.scrolled .nav .btn { color: var(--chalk); }
+.nav .btn { color: #ffffff; }
+.site-header.scrolled .nav .btn { color: #ffffff; }
 
 .nav-toggle {
   display: none;
@@ -265,7 +266,7 @@ a { color: inherit; }
   font-family: var(--serif);
   font-style: italic;
   font-size: 1.35rem;
-  color: var(--cognac);
+  color: var(--accent-text);
   margin-top: 1.6rem;
 }
 
@@ -416,7 +417,7 @@ a { color: inherit; }
 .owner__body h3 { font-size: 2rem; margin-bottom: 0.2rem; }
 .owner__role {
   font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--cognac); margin-bottom: 1.2rem; display: block;
+  color: var(--accent-text); margin-bottom: 1.2rem; display: block;
 }
 .owner__body blockquote {
   margin: 0 0 1.2rem;
@@ -489,7 +490,7 @@ a { color: inherit; }
 .stylist-card__body { padding: 1.5rem 1.5rem 1.7rem; flex: 1; display: flex; flex-direction: column; }
 .stylist-card__role {
   font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--cognac); margin-bottom: 0.35rem;
+  color: var(--accent-text); margin-bottom: 0.35rem;
 }
 .stylist-card h4 { font-size: 1.5rem; margin: 0 0 0.4rem; }
 .stylist-card p { font-size: 0.92rem; color: var(--ink-soft); margin: 0 0 1.2rem; flex: 1; }
@@ -565,14 +566,14 @@ a { color: inherit; }
 .contact-list li:last-child { border-bottom: 1px solid var(--line); }
 .ico--lead {
   width: 19px; height: 19px;
-  color: var(--cognac);
+  color: var(--accent-text);
   margin-top: 0.15rem;
 }
 .contact-list .k {
   min-width: 5.5rem;
   padding-top: 0.15rem;
   font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--cognac);
+  color: var(--accent-text);
 }
 .contact-list .v { font-size: 1.05rem; color: var(--ink); }
 .contact-list .v a { text-decoration: none; border-bottom: 1px solid var(--brass); }
@@ -724,7 +725,7 @@ a { color: inherit; }
   gap: 0.5rem;
   padding: 0.9rem 1.35rem;
   background: var(--cognac);
-  color: var(--chalk);
+  color: #ffffff;
   border-radius: 999px;
   text-decoration: none;
   font-family: var(--sans);
@@ -749,6 +750,7 @@ body.past-hero .book-fab { display: inline-flex; }
 [data-theme="botanical"] {
   --line: rgba(201,162,75,0.24);
   --muted: #9b8f7e;
+  --accent-text: var(--brass-lt);   /* light brass label text — AA on dark */
   --shadow: 0 26px 64px -28px rgba(0,0,0,0.72);
   --bg: #1b1020;
   --bg-alt: #12201a;
@@ -791,11 +793,15 @@ body.past-hero .book-fab { display: inline-flex; }
 /* Links + buttons */
 [data-theme="botanical"] .slink { color: var(--text); border-color: var(--line); }
 [data-theme="botanical"] .slink:hover { background: var(--brass); color: #1b1020; border-color: var(--brass); }
-[data-theme="botanical"] .btn { --bg: var(--brass); --fg: #1b1020; border-color: var(--brass); }
-[data-theme="botanical"] .btn--cognac { --bg: var(--cognac); border-color: var(--cognac); color: #1b1020; }
-[data-theme="botanical"] .btn--ghost { color: var(--text); border-color: var(--line); }
-[data-theme="botanical"] .btn--ghost:hover { background: var(--brass); color: #1b1020; border-color: var(--brass); }
-[data-theme="botanical"] .book-fab { background: var(--brass); color: #1b1020; }
+/* Primary CTAs stay a solid, high-visibility orange (never a faint brass). */
+[data-theme="botanical"] .btn { --bg: var(--cognac); --fg: #ffffff; border-color: var(--cognac); }
+[data-theme="botanical"] .btn:hover { --bg: #c06f38; border-color: #c06f38; }
+[data-theme="botanical"] .btn--cognac { --bg: var(--cognac); --fg: #ffffff; border-color: var(--cognac); }
+[data-theme="botanical"] .btn--ghost { color: var(--text); border-color: rgba(233,224,214,0.55); background: transparent; }
+[data-theme="botanical"] .btn--ghost:hover { background: var(--cognac); color: #ffffff; border-color: var(--cognac); }
+[data-theme="botanical"] .btn--light { background: var(--text); color: #1b1020; border-color: var(--text); }
+[data-theme="botanical"] .book-fab { background: var(--cognac); color: #ffffff; }
+[data-theme="botanical"] .book-fab:hover { background: #c06f38; }
 
 /* Contact list */
 [data-theme="botanical"] .contact-list .v { color: var(--text); }
@@ -917,3 +923,80 @@ body.past-hero .book-fab { display: inline-flex; }
 
 /* Contact list: brass rules already via --line; brighten the leading icons */
 [data-theme="botanical"] .contact-list li { border-color: rgba(201,162,75,0.2); }
+
+/* ===========================================================
+   STYLIST MATCHER QUIZ
+   =========================================================== */
+.matcher { padding: var(--section-y) 0; background: var(--chalk-2); }
+.matcher__head { text-align: center; max-width: 48ch; margin: 0 auto 2.6rem; }
+.matcher__head .eyebrow { justify-content: center; }
+.matcher__head h2 { font-size: clamp(2rem, 4.5vw, 3.2rem); }
+.matcher__head p { color: var(--ink-soft); }
+.matcher__card {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--chalk);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(1.6rem, 4vw, 3rem);
+}
+.quiz-step { margin-bottom: 1.8rem; }
+.quiz-q {
+  display: flex; align-items: center; gap: 0.7rem;
+  font-family: var(--serif); font-size: 1.3rem; margin: 0 0 0.9rem;
+}
+.quiz-n {
+  flex: none;
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border: 1px solid var(--brass); color: var(--accent-text);
+  border-radius: 50%; font-family: var(--sans); font-size: 0.85rem;
+}
+.quiz-opts { display: flex; flex-wrap: wrap; gap: 0.6rem; padding-left: 2.4rem; }
+.quiz-opt {
+  font-family: var(--sans);
+  font-size: 0.8rem; letter-spacing: 0.06em;
+  padding: 0.6rem 1.1rem;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid rgba(27,24,21,0.28);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.quiz-opt:hover { transform: translateY(-2px); border-color: var(--cognac); }
+.quiz-opt.is-on { background: var(--cognac); color: #ffffff; border-color: var(--cognac); }
+.quiz-actions { display: flex; align-items: center; gap: 1.2rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.btn[disabled] { opacity: 0.4; pointer-events: none; }
+.quiz-reset {
+  background: none; border: 0; cursor: pointer;
+  font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted);
+  border-bottom: 1px solid var(--line); padding: 0 0 2px;
+}
+.quiz-reset:hover { color: var(--cognac); }
+.quiz-results:empty { display: none; }
+.quiz-results { margin-top: 2.2rem; padding-top: 1.8rem; border-top: 1px solid var(--line); }
+.quiz-verdict {
+  font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--accent-text); margin: 0 0 1.2rem;
+}
+.quiz-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+
+/* Dark botanical overrides */
+[data-theme="botanical"] .matcher { background: var(--panel-2); }
+[data-theme="botanical"] .matcher__head p { color: var(--text-soft); }
+[data-theme="botanical"] .matcher__card { background: var(--panel); border-color: var(--line); }
+[data-theme="botanical"] .quiz-opt { color: var(--text); border-color: rgba(233,224,214,0.4); }
+[data-theme="botanical"] .quiz-opt:hover { border-color: var(--cognac); }
+[data-theme="botanical"] .quiz-opt.is-on { background: var(--cognac); color: #ffffff; border-color: var(--cognac); }
+
+@media (max-width: 640px) {
+  .quiz-opts { padding-left: 0; }
+  .quiz-cards { grid-template-columns: 1fr; }
+}
+
+/* Visit intro paragraph — theme-aware (was an inline color that stayed dark) */
+.visit__lead { color: var(--ink-soft); margin: 0 0 1rem; }
+[data-theme="botanical"] .visit__lead { color: var(--text-soft); }

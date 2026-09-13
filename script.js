@@ -68,43 +68,140 @@ const STYLISTS = [
   //   images/stylists/brooklyn.jpg, images/stylists/veronica.jpg
 ];
 
+const ico = id => `<svg class="ico"><use href="#${id}"/></svg>`;
+
+function stylistCardHTML(s) {
+  const initial = s.name.trim().charAt(0).toUpperCase();
+  const avatar = s.photo
+    ? `<div class="stylist-card__media"><img src="${s.photo}" alt="${s.name}" loading="lazy"></div>`
+    : `<div class="stylist-card__media stylist-card__mono">${initial}</div>`;
+  const links = [];
+  if (s.booking)   links.push(`<a class="slink" href="${s.booking}">${ico('i-calendar')}<span>Book</span></a>`);
+  if (s.website)   links.push(`<a class="slink" href="${s.website}" target="_blank" rel="noopener">${ico('i-globe')}<span>Website</span></a>`);
+  if (s.instagram) links.push(`<a class="slink" href="${s.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${ico('i-instagram')}<span>Instagram</span></a>`);
+  const linkRow = links.length
+    ? `<div class="stylist-card__links">${links.join('')}</div>`
+    : `<div class="stylist-card__soon">Booking &amp; site links coming soon</div>`;
+  return `<article class="stylist-card reveal in">
+    ${avatar}
+    <div class="stylist-card__body">
+      <span class="stylist-card__role">${s.role}</span>
+      <h4>${s.name}</h4>
+      <p>${s.specialty}</p>
+      ${linkRow}
+    </div>
+  </article>`;
+}
+
 function renderStylists() {
   const grid = document.getElementById('stylistGrid');
   if (!grid) return;
-  const ico = id => `<svg class="ico"><use href="#${id}"/></svg>`;
-  const iconWeb = ico('i-globe');
-  const iconBook = ico('i-calendar');
-  const iconIg = ico('i-instagram');
-
-  grid.innerHTML = STYLISTS.map(s => {
-    const initial = s.name.trim().charAt(0).toUpperCase();
-    const avatar = s.photo
-      ? `<div class="stylist-card__media"><img src="${s.photo}" alt="${s.name}" loading="lazy"></div>`
-      : `<div class="stylist-card__media stylist-card__mono">${initial}</div>`;
-    const links = [];
-    if (s.booking)   links.push(`<a class="slink" href="${s.booking}">${iconBook}<span>Book</span></a>`);
-    if (s.website)   links.push(`<a class="slink" href="${s.website}" target="_blank" rel="noopener">${iconWeb}<span>Website</span></a>`);
-    if (s.instagram) links.push(`<a class="slink" href="${s.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${iconIg}<span>Instagram</span></a>`);
-    const linkRow = links.length
-      ? `<div class="stylist-card__links">${links.join('')}</div>`
-      : `<div class="stylist-card__soon">Booking &amp; site links coming soon</div>`;
-    return `<article class="stylist-card reveal">
-      ${avatar}
-      <div class="stylist-card__body">
-        <span class="stylist-card__role">${s.role}</span>
-        <h4>${s.name}</h4>
-        <p>${s.specialty}</p>
-        ${linkRow}
-      </div>
-    </article>`;
-  }).join('');
+  grid.innerHTML = STYLISTS.map(stylistCardHTML).join('');
 }
 renderStylists();
+
+/* ============================================================
+   STYLIST MATCHER QUIZ
+   Scores stylists by tag overlap with the visitor's answers,
+   then recommends the top two. Tags map to STYLISTS by name.
+   ============================================================ */
+const STYLIST_TAGS = {
+  Ashley:  ['color','blonde','vivid','fine','curly'],
+  Janaye:  ['cut','color','natural'],
+  Jessie:  ['blonde','vivid','cut','extensions','lowmaintenance'],
+  Marissa: ['color','natural','lowmaintenance'],
+  Adele:   ['color','vivid','extensions','cut'],
+  Elliot:  ['barbering','cut','classic'],
+  Meghan:  ['cut','color','classic'],
+  Jordan:  ['color','cut','textured','natural']
+};
+
+const QUIZ = [
+  { q: "What are you booking?", a: [
+    { label: "Color", tags: ['color'] },
+    { label: "Cut & style", tags: ['cut'] },
+    { label: "Blonde / lightening", tags: ['blonde','color'] },
+    { label: "Extensions", tags: ['extensions'] },
+    { label: "Barbering & beard", tags: ['barbering','cut'] },
+  ]},
+  { q: "Your goal vibe?", a: [
+    { label: "Natural & lived-in", tags: ['natural','lowmaintenance'] },
+    { label: "Bold & vivid", tags: ['vivid'] },
+    { label: "Classic & polished", tags: ['classic'] },
+    { label: "Low-maintenance", tags: ['lowmaintenance'] },
+  ]},
+  { q: "Your hair?", a: [
+    { label: "Fine", tags: ['fine'] },
+    { label: "Thick or curly", tags: ['curly'] },
+    { label: "Textured or coily", tags: ['textured'] },
+    { label: "Not sure yet", tags: [] },
+  ]},
+];
+
+const quizAnswers = new Array(QUIZ.length).fill(null);
+
+function renderQuiz() {
+  const stage = document.getElementById('quizStage');
+  if (!stage) return;
+  const steps = QUIZ.map((step, qi) => {
+    const opts = step.a.map((o, oi) => {
+      const on = quizAnswers[qi] === oi ? ' is-on' : '';
+      return `<button type="button" class="quiz-opt${on}" data-q="${qi}" data-o="${oi}">${o.label}</button>`;
+    }).join('');
+    return `<div class="quiz-step">
+      <p class="quiz-q"><span class="quiz-n">${qi + 1}</span>${step.q}</p>
+      <div class="quiz-opts">${opts}</div>
+    </div>`;
+  }).join('');
+  const answered = quizAnswers.filter(v => v !== null).length;
+  stage.innerHTML = `
+    <div class="quiz-steps">${steps}</div>
+    <div class="quiz-actions">
+      <button type="button" class="btn btn--cognac" id="quizGo" ${answered ? '' : 'disabled'}>Show my matches</button>
+      <button type="button" class="quiz-reset" id="quizReset" hidden>Start over</button>
+    </div>
+    <div id="quizResults" class="quiz-results" aria-live="polite"></div>`;
+}
+
+function scoreMatches() {
+  const chosen = [];
+  quizAnswers.forEach((oi, qi) => { if (oi !== null) chosen.push(...QUIZ[qi].a[oi].tags); });
+  const ranked = STYLISTS.map((s, idx) => {
+    const tags = STYLIST_TAGS[s.name] || [];
+    const score = chosen.reduce((n, t) => n + (tags.includes(t) ? 1 : 0), 0);
+    return { s, score, idx };
+  }).sort((a, b) => b.score - a.score || a.idx - b.idx);
+  const top = ranked.filter(r => r.score > 0).slice(0, 2);
+  return (top.length ? top : ranked.slice(0, 2)).map(r => r.s);
+}
+
+document.addEventListener('click', (e) => {
+  const opt = e.target.closest('.quiz-opt');
+  if (opt) {
+    quizAnswers[+opt.dataset.q] = +opt.dataset.o;
+    renderQuiz();
+    return;
+  }
+  if (e.target.id === 'quizGo') {
+    const picks = scoreMatches();
+    const wrap = document.getElementById('quizResults');
+    wrap.innerHTML = `<p class="quiz-verdict">Your best matches at Chalk:</p>
+      <div class="quiz-cards">${picks.map(stylistCardHTML).join('')}</div>`;
+    document.getElementById('quizReset').hidden = false;
+    wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    return;
+  }
+  if (e.target.id === 'quizReset') {
+    quizAnswers.fill(null);
+    renderQuiz();
+  }
+});
+renderQuiz();
 
 // Theme toggle — refined (light) <-> dark botanical maximalist
 const THEME_KEY = 'chalk-theme';
 const root = document.documentElement;
-const currentTheme = () => root.getAttribute('data-theme') || 'botanical';
+const currentTheme = () => root.getAttribute('data-theme') || 'refined';
 function setTheme(t) {
   root.setAttribute('data-theme', t);
   try { localStorage.setItem(THEME_KEY, t); } catch (e) {}

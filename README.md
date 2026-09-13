@@ -24,10 +24,19 @@ The site ships with two full themes, switched by the toggle in the header
 - **`botanical`** — dark botanical maximalist: deep plum + forest backgrounds,
   brass botanical fern/flourish ornaments, jewel contrast, heavier grain.
 
-**Default is `botanical`.** To change the default, edit the two fallbacks
-(`|| 'botanical'`) in the inline `<script>` in `index.html` head and in
+**Default is `refined` (light).** To change the default, edit the two fallbacks
+(`|| 'refined'`) in the inline `<script>` in `index.html` head and in
 `script.js`. You can also force a theme via URL for sharing/screenshots:
 `?theme=refined` or `?theme=botanical`.
+
+Both themes pass WCAG AA text contrast (audited with `tools/`-style Brave
+headless script). Accessible color tokens: `--accent-text` (label text) and
+`--muted` are tuned per theme; primary CTAs use white text on orange for AA.
+
+## Stylist Matcher quiz
+Section `#matcher` (see `STYLIST_TAGS` + `QUIZ` in `script.js`). A 3-question
+quiz scores stylists by tag overlap and recommends the top two. Pure static
+JS, no dependencies, themed for light + dark. Edit tags/questions in one place.
 
 Both themes share a film-grain/paper texture overlay (`.grain`) and a sticky
 "Book" button (`.book-fab`) that appears past the hero — the booking path stays
