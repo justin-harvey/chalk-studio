@@ -17,6 +17,13 @@ Pulled from the interior photos: chalk-white walls with brass line-work, cognac
 leather, ochre velvet, walnut cabinetry, ink-black ceilings, brass fauna.
 Fonts: Fraunces (display serif) + Jost (sans).
 
+## Icons
+Local inline SVG sprite in `index.html` (`#i-*` symbols), no icon CDN. Path
+data for calendar/arrow/close is from the StyleSeed icon library
+(`styleseed/engine/icons`); globe, Instagram, phone, mail, pin, clock and
+scissors are drawn in the same 24×24 stroke style. Use anywhere with
+`<svg class="ico"><use href="#i-name"/></svg>`.
+
 ## Content sources
 - Interior photography: owner-supplied (`../interior photos/`)
 - Business facts (owner, model, sister studio, contact): scraped from

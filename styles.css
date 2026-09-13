@@ -62,6 +62,19 @@ a { color: inherit; }
 
 .wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
 
+/* Local icon set (see #i-* sprite in index.html) */
+.ico {
+  width: 1em; height: 1em;
+  display: inline-block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.14em;
+  flex: none;
+}
+
 /* Small caps label used throughout */
 .eyebrow {
   font-family: var(--sans);
@@ -544,14 +557,20 @@ a { color: inherit; }
 .contact-list { list-style: none; padding: 0; margin: 2rem 0 0; }
 .contact-list li {
   display: flex;
-  gap: 1.2rem;
+  gap: 1rem;
   padding: 1.1rem 0;
   border-top: 1px solid var(--line);
-  align-items: baseline;
+  align-items: flex-start;
 }
 .contact-list li:last-child { border-bottom: 1px solid var(--line); }
+.ico--lead {
+  width: 19px; height: 19px;
+  color: var(--cognac);
+  margin-top: 0.15rem;
+}
 .contact-list .k {
-  min-width: 6.5rem;
+  min-width: 5.5rem;
+  padding-top: 0.15rem;
   font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--cognac);
 }

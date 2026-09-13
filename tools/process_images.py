@@ -11,13 +11,11 @@ MAPPING = {
     "IMG_20260913_163216859_HDR.jpg": "wash-stations",
     "IMG_20260913_163453539_HDR.jpg": "wash-stations-wide",
     "IMG_20260913_163504656_HDR.jpg": "reception",
-    "IMG_20260913_163117637_HDR.jpg": "feature-wall-gold",
     "IMG_20260913_163438446_HDR.jpg": "styling-windows",
     "IMG_20260913_163551850_HDR.jpg": "floor-divider",
     "IMG_20260913_163618306_HDR.jpg": "styling-mirrors",
     "IMG_20260913_163337245_HDR.jpg": "scatter-wall",
     "IMG_20260913_163522259.jpg": "neon-sign",
-    "IMG_20260913_163234159_HDR.jpg": "scarab-vanity",
     "IMG_20260913_163701067.jpg": "pattern-lines",
     "IMG_20260913_163844563_HDR.jpg": "pattern-wave",
     "IMG_20260913_164104665_HDR.jpg": "pattern-wave-2",
@@ -48,5 +46,13 @@ for raw, name in MAPPING.items():
     im.save(out, "JPEG", quality=QUALITY, optimize=True, progressive=True)
     kb = os.path.getsize(out) // 1024
     print(f"{name:22s} {im.size[0]}x{im.size[1]}  {kb} KB")
+
+# Prune orphaned outputs whose source is no longer in MAPPING
+# (e.g. photos the owner deleted). Keeps site/images in sync.
+wanted = {name + ".jpg" for name in MAPPING.values()}
+for existing in os.listdir(OUT):
+    if existing.endswith(".jpg") and existing not in wanted:
+        os.remove(os.path.join(OUT, existing))
+        print(f"pruned  {existing}")
 
 print("\nDone ->", OUT)

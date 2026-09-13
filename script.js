@@ -57,9 +57,10 @@ const STYLISTS = [
 function renderStylists() {
   const grid = document.getElementById('stylistGrid');
   if (!grid) return;
-  const iconWeb = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>';
-  const iconBook = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4"/></svg>';
-  const iconIg = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16" rx="4.5"/><circle cx="12" cy="12" r="3.4"/><circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none"/></svg>';
+  const ico = id => `<svg class="ico"><use href="#${id}"/></svg>`;
+  const iconWeb = ico('i-globe');
+  const iconBook = ico('i-calendar');
+  const iconIg = ico('i-instagram');
 
   grid.innerHTML = STYLISTS.map(s => {
     const initial = s.name.trim().charAt(0).toUpperCase();
