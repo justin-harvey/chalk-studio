@@ -163,16 +163,28 @@ function renderQuiz() {
     <div id="quizResults" class="quiz-results" aria-live="polite"></div>`;
 }
 
-function scoreMatches() {
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// Fair match — NOT a ranking. Every artist who does this kind of work is an
+// equal match; we simply surface them (shuffled, so order isn't a hierarchy).
+function matchStylists() {
   const chosen = [];
   quizAnswers.forEach((oi, qi) => { if (oi !== null) chosen.push(...QUIZ[qi].a[oi].tags); });
-  const ranked = STYLISTS.map((s, idx) => {
+  const matches = STYLISTS.filter(s => {
     const tags = STYLIST_TAGS[s.name] || [];
-    const score = chosen.reduce((n, t) => n + (tags.includes(t) ? 1 : 0), 0);
-    return { s, score, idx };
-  }).sort((a, b) => b.score - a.score || a.idx - b.idx);
-  const top = ranked.filter(r => r.score > 0).slice(0, 2);
-  return (top.length ? top : ranked.slice(0, 2)).map(r => r.s);
+    return chosen.some(t => tags.includes(t));
+  });
+  // If nothing lines up (e.g. "not sure"), everyone's fair game.
+  // Shuffle (order is never a ranking) and show up to 3 — a fair random
+  // sample that rotates each visit, so exposure stays even across the team.
+  return shuffle(matches.length ? matches : STYLISTS).slice(0, 3);
 }
 
 document.addEventListener('click', (e) => {
@@ -183,10 +195,11 @@ document.addEventListener('click', (e) => {
     return;
   }
   if (e.target.id === 'quizGo') {
-    const picks = scoreMatches();
+    const picks = matchStylists();
     const wrap = document.getElementById('quizResults');
-    wrap.innerHTML = `<p class="quiz-verdict">Your best matches at Chalk:</p>
-      <div class="quiz-cards">${picks.map(stylistCardHTML).join('')}</div>`;
+    wrap.innerHTML = `<p class="quiz-verdict">Artists who love this kind of work</p>
+      <div class="quiz-cards">${picks.map(stylistCardHTML).join('')}</div>
+      <p class="quiz-fineprint">Every Chalk artist is an independent pro — this is a friendly starting point, not a ranking. Not sure? Any of them would love to help.</p>`;
     document.getElementById('quizReset').hidden = false;
     wrap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     return;
@@ -259,6 +272,53 @@ const closeLb = () => {
 lbClose.addEventListener('click', closeLb);
 lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+
+// Work carousel — arrows, drag-to-scroll, disable at ends
+(function () {
+  const track = document.getElementById('workTrack');
+  if (!track) return;
+  const prev = document.getElementById('workPrev');
+  const next = document.getElementById('workNext');
+  prev.classList.add('is-prev');
+  const step = () => {
+    const card = track.querySelector('.work__card');
+    return card ? card.getBoundingClientRect().width + 18 : 320;
+  };
+  const updateArrows = () => {
+    const max = track.scrollWidth - track.clientWidth - 2;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max;
+  };
+  prev.addEventListener('click', () => track.scrollBy({ left: -step() * 1.5, behavior: 'smooth' }));
+  next.addEventListener('click', () => track.scrollBy({ left: step() * 1.5, behavior: 'smooth' }));
+  track.addEventListener('scroll', updateArrows, { passive: true });
+  window.addEventListener('resize', updateArrows);
+  updateArrows();
+
+  // pointer drag
+  let down = false, startX = 0, startLeft = 0, moved = 0;
+  track.addEventListener('pointerdown', (e) => {
+    down = true; moved = 0; startX = e.clientX; startLeft = track.scrollLeft;
+    track.setPointerCapture(e.pointerId);
+  });
+  track.addEventListener('pointermove', (e) => {
+    if (!down) return;
+    const dx = e.clientX - startX;
+    if (Math.abs(dx) > 4) track.classList.add('is-dragging');
+    moved = Math.max(moved, Math.abs(dx));
+    track.scrollLeft = startLeft - dx;
+  });
+  const end = () => { down = false; track.classList.remove('is-dragging'); };
+  track.addEventListener('pointerup', end);
+  track.addEventListener('pointercancel', end);
+  // swallow the click after a real drag so it doesn't feel janky
+  track.addEventListener('click', (e) => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+  // keyboard
+  track.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { track.scrollBy({ left: step(), behavior: 'smooth' }); }
+    if (e.key === 'ArrowLeft')  { track.scrollBy({ left: -step(), behavior: 'smooth' }); }
+  });
+})();
 
 // Footer year
 document.getElementById('year').textContent = new Date().getFullYear();
