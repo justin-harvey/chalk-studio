@@ -17,55 +17,19 @@
    ============================================================ */
 const STYLISTS = [
   {
-    name: "Ashley",
-    role: "Color Specialist",
-    specialty: "Fine-hair aficionado, micro-foiler, curly cutter and vivid color.",
-    photo: "images/stylists/ashley.jpg", website: "", booking: "", instagram: ""
-  },
-  {
-    name: "Janaye",
-    role: "Stylist",
-    specialty: "Cuts and color that start with how you want to feel.",
-    photo: "images/stylists/janaye.jpg", website: "", booking: "", instagram: ""
-  },
-  {
-    name: "Jessie",
-    role: "Stylist",
-    specialty: "Blondes, rich browns, Brazilian blowouts, cuts for all and fun vivid color.",
-    photo: "images/stylists/jessie.jpg", website: "", booking: "", instagram: ""
-  },
-  {
-    name: "Marissa",
-    role: "Colorist",
-    specialty: "Dimensional and live-in color.",
-    photo: "images/stylists/marissa.jpg", website: "", booking: "", instagram: ""
-  },
-  {
-    name: "Adele",
-    role: "Stylist",
-    specialty: "Fantastical color melts, extensions and transformational cuts.",
-    photo: "images/stylists/adele.jpg", website: "", booking: "", instagram: ""
-  },
-  {
-    name: "Elliot",
-    role: "Barber · Stylist",
-    specialty: "Classic and modern cuts, non-gender cuts, beard trims and straight-razor shaves.",
-    photo: "images/stylists/elliot.jpg", website: "", booking: "", instagram: ""
-  },
-  {
     name: "Meghan",
     role: "Stylist",
     specialty: "Seventeen years behind the chair; cuts and color rooted in Newbury Street training.",
     photo: "images/stylists/meghan.jpg", website: "", booking: "", instagram: ""
   },
   {
-    name: "Jordan",
+    name: "Brooklyn",
     role: "Stylist",
-    specialty: "Custom color and cuts on every texture; inclusive, collaborative chair.",
-    photo: "images/stylists/jordan.jpg", website: "", booking: "", instagram: ""
+    specialty: "Independent stylist at Chalk. Full bio coming soon.",
+    photo: "images/stylists/brooklyn.jpg", website: "", booking: "", instagram: ""
   }
-  // Extra headshots also scraped and ready to add once confirmed for Chalk:
-  //   images/stylists/brooklyn.jpg, images/stylists/veronica.jpg
+  // Extra headshot also scraped and ready to add once confirmed for Chalk:
+  //   images/stylists/veronica.jpg
 ];
 
 const ico = id => `<svg class="ico"><use href="#${id}"/></svg>`;
@@ -106,14 +70,8 @@ renderStylists();
    then recommends the top two. Tags map to STYLISTS by name.
    ============================================================ */
 const STYLIST_TAGS = {
-  Ashley:  ['color','blonde','vivid','fine','curly'],
-  Janaye:  ['cut','color','natural'],
-  Jessie:  ['blonde','vivid','cut','extensions','lowmaintenance'],
-  Marissa: ['color','natural','lowmaintenance'],
-  Adele:   ['color','vivid','extensions','cut'],
-  Elliot:  ['barbering','cut','classic'],
-  Meghan:  ['cut','color','classic'],
-  Jordan:  ['color','cut','textured','natural']
+  Meghan:   ['cut','color','classic'],
+  Brooklyn: ['cut','color']
 };
 
 const QUIZ = [
