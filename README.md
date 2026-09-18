@@ -1,4 +1,5 @@
 # Chalk Studio — website
+Live: https://chalk-studio.netlify.app/
 
 Static one-page marketing site for **Chalk Studio**, an upscale-eclectic hair studio in Portland, Maine and the sister salon to [Slate Studio](https://www.slatestudioportland.com/).
 
